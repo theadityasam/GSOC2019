@@ -1,0 +1,106 @@
+---
+title: "cv_datasets"
+output: html_document
+---
+
+
+Loading the required packges
+```{r loading}
+library(iregnet)
+library(data.table)
+library(penaltyLearning)
+```
+
+
+# neuroblastomaProcessed
+```{r neuro}
+data("neuroblastomaProcessed")
+X <- neuroblastomaProcessed$feature.mat
+Y <- neuroblastomaProcessed$target.mat
+  smp_size <- floor(0.75 * nrow(X))
+  set.seed(123)
+  train_ind <- sample(seq_len(nrow(X)), size = smp_size)
+  X_train <- X[train_ind,] 
+  X_test <- X[-train_ind,]
+  Y_train <- Y[train_ind,] 
+  Y_test <- Y[-train_ind,]
+
+  cv_fit <- cv.iregnet(X_train, Y_train, nfolds = 5L, family = "gaussian")
+  plot(cv_fit)
+  min.idx <- cv_fit$selected[1]
+  sd.idx <- cv_fit$selected[2]
+  
+  fit <- iregnet(X_train, Y_train, num_lambda = 1, lambda = cv_fit$lambda[min.idx])
+  Y_predicted <- predict(fit, newx = X_test, type = "response")
+
+  correct <- sum(Y_predicted >= Y_test[,1] & Y_predicted <= Y_test[,2])
+  cat("Accuracy with min lambda:", (correct/nrow(Y_test))*100)
+
+  fit <- iregnet(X_train, Y_train, num_lambda = 1, lambda = cv_fit$lambda[sd.idx])
+  Y_predicted <- predict(fit, newx = X_test, type = "response")
+  
+  correct <- sum(Y_predicted >= Y_test[,1] & Y_predicted <= Y_test[,2])
+  cat("Accuracy with lambda at 1sd:", (correct/nrow(Y_test))*100)
+```
+
+# penalty.learning
+```{r penalty}
+data("penalty.learning")
+X <- penalty.learning$X.mat
+Y <- penalty.learning$y.mat
+  smp_size <- floor(0.75 * nrow(X))
+  set.seed(123)
+  train_ind <- sample(seq_len(nrow(X)), size = smp_size)
+  X_train <- X[train_ind,] 
+  X_test <- X[-train_ind,]
+  Y_train <- Y[train_ind,] 
+  Y_test <- Y[-train_ind,]
+
+  cv_fit <- cv.iregnet(X_train, Y_train, nfolds = 5L, family = "gaussian")
+  plot(cv_fit)
+  min.idx <- cv_fit$selected[1]
+  sd.idx <- cv_fit$selected[2]
+  
+  fit <- iregnet(X_train, Y_train, num_lambda = 1, lambda = cv_fit$lambda[min.idx])
+  Y_predicted <- predict(fit, newx = X_test, type = "response")
+
+  correct <- sum(Y_predicted >= Y_test[,1] & Y_predicted <= Y_test[,2])
+  cat("Accuracy with min lambda:", (correct/nrow(Y_test))*100)
+
+  fit <- iregnet(X_train, Y_train, num_lambda = 1, lambda = cv_fit$lambda[sd.idx])
+  Y_predicted <- predict(fit, newx = X_test, type = "response")
+  
+  correct <- sum(Y_predicted >= Y_test[,1] & Y_predicted <= Y_test[,2])
+  cat("Accuracy with lambda at 1sd:", (correct/nrow(Y_test))*100)
+```
+
+
+Function that you can use for testing:
+```{r test,eval=FALSE}
+predict_accuracy <- function(X, Y){
+  smp_size <- floor(0.75 * nrow(X))
+  set.seed(123)
+  train_ind <- sample(seq_len(nrow(X)), size = smp_size)
+  X_train <- X[train_ind,] 
+  X_test <- X[-train_ind,]
+  Y_train <- Y[train_ind,] 
+  Y_test <- Y[-train_ind,]
+
+  cv_fit <- cv.iregnet(X_train, Y_train, nfolds = 5L, family = "gaussian")
+  plot(cv_fit)
+  min.idx <- cv_fit$selected[1]
+  sd.idx <- cv_fit$selected[2]
+  
+  fit <- iregnet(X_train, Y_train, num_lambda = 1, lambda = cv_fit$lambda[min.idx])
+  Y_predicted <- predict(fit, newx = X_test, type = "response")
+
+  correct <- sum(Y_predicted >= Y_test[,1] & Y_predicted <= Y_test[,2])
+  cat("Accuracy with min lambda:", (correct/nrow(Y_test))*100)
+
+  fit <- iregnet(X_train, Y_train, num_lambda = 1, lambda = cv_fit$lambda[sd.idx])
+  Y_predicted <- predict(fit, newx = X_test, type = "response")
+  
+  correct <- sum(Y_predicted >= Y_test[,1] & Y_predicted <= Y_test[,2])
+  cat("Accuracy with lambda at 1sd:", (correct/nrow(Y_test))*100)
+}  
+```

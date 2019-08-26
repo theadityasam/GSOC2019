@@ -1,0 +1,1040 @@
+{
+ "geoms": {
+ "geom1_point_q": {
+ "geom": "point",
+"classed": "geom1_point_q",
+"aes": {
+ "x": "algorithm",
+"y": "auc",
+"colour": "threshold",
+"shape": "errorid",
+"showSelectedlegendshape": "errorid",
+"showSelectedlegendcolour": "threshold" 
+},
+"params": {
+ "na.rm": false,
+"na.rm": false 
+},
+"types": {
+ "colour": "rgb",
+"shape": "numeric",
+"x": "integer",
+"y": "numeric",
+"showSelectedlegendshape": "factor",
+"showSelectedlegendcolour": "factor",
+"PANEL": "factor",
+"fill": "rgb",
+"group": "character" 
+},
+"chunk_order": [],
+"nest_order": [
+ "showSelectedlegendshape",
+"showSelectedlegendcolour",
+"PANEL" 
+],
+"subset_order": [
+ "showSelectedlegendshape",
+"showSelectedlegendcolour",
+"PANEL" 
+],
+"chunks": 1,
+"total": 1 
+},
+"geom2_hline_q": {
+ "geom": "hline",
+"classed": "geom2_hline_q",
+"aes": {
+ "yintercept": "baseline.auc" 
+},
+"params": {
+ "na.rm": false,
+"na.rm": false 
+},
+"types": {
+ "yintercept": "numeric",
+"PANEL": "factor",
+"group": "character" 
+},
+"chunk_order": [],
+"nest_order": [
+ "PANEL" 
+],
+"subset_order": [
+ "PANEL" 
+],
+"chunks": 1,
+"total": 1 
+} 
+},
+"selectors": {
+ "errorid": {
+ "type": "multiple",
+"legend": true,
+"is.variable.value": false,
+"showSelected": true,
+"selected": [ "0", "-1", "-3" ],
+"levels": [ "0", "-1", "-3" ],
+"update": [
+ "geom1_point_q" 
+] 
+},
+"threshold": {
+ "type": "multiple",
+"legend": true,
+"is.variable.value": false,
+"showSelected": true,
+"selected": [ "e-2", "e-3", "e-4", "e-4e5" ],
+"levels": [ "e-2", "e-3", "e-4", "e-4e5" ],
+"update": [
+ "geom1_point_q" 
+] 
+} 
+},
+"plots": {
+ "q": {
+ "panel_margin_lines":     0.25,
+"legend": {
+ "errorid": {
+ "guide": "legend",
+"geoms": "point",
+"title": "errorid",
+"class": "errorid",
+"selector": "errorid",
+"is_discrete": true,
+"legend_type": "shape",
+"entries": [
+ {
+ "pointshape":       15,
+"pointcolour": "#000000",
+"pointsize":      1.5,
+"pointstroke":      0.5,
+"label": "-3" 
+},
+{
+ "pointshape":       17,
+"pointcolour": "#000000",
+"pointsize":      1.5,
+"pointstroke":      0.5,
+"label": "-1" 
+},
+{
+ "pointshape":       16,
+"pointcolour": "#000000",
+"pointsize":      1.5,
+"pointstroke":      0.5,
+"label": "0" 
+} 
+] 
+},
+"threshold": {
+ "guide": "legend",
+"geoms": "point",
+"title": "threshold",
+"class": "threshold",
+"selector": "threshold",
+"is_discrete": true,
+"legend_type": "colour",
+"entries": [
+ {
+ "pointcolour": "#F8766D",
+"pointshape":       19,
+"pointsize":      1.5,
+"pointstroke":      0.5,
+"label": "e-2" 
+},
+{
+ "pointcolour": "#7CAE00",
+"pointshape":       19,
+"pointsize":      1.5,
+"pointstroke":      0.5,
+"label": "e-3" 
+},
+{
+ "pointcolour": "#00BFC4",
+"pointshape":       19,
+"pointsize":      1.5,
+"pointstroke":      0.5,
+"label": "e-4" 
+},
+{
+ "pointcolour": "#C77CFF",
+"pointshape":       19,
+"pointsize":      1.5,
+"pointstroke":      0.5,
+"label": "e-4e5" 
+} 
+] 
+} 
+},
+"strips": {
+ "top": [ "systematic", "H3K36me3_TDH_other", "H3K36me3_TDH_immune", "H3K4me3_TDH_ENCODE", "H3K36me3_AM_immune", "CTCF_TDH_ENCODE", "H3K9me3_TDH_BP", "H3K4me1_TDH_BP", "H3K27ac-H3K4me3_TDHAM_BP", "H3K4me3_XJ_immune", "ATAC_JV_adipose", "H3K4me3_TDH_other", "H3K4me3_TDH_immune", "H3K36me3_TDH_ENCODE", "H3K27me3_TDH_some", "H3K4me3_PGP_immune", "H3K27ac_TDH_some", "H3K27me3_RL_cancer" ],
+"right": [
+ "" 
+],
+"n": {
+ "top": 4,
+"right":        0 
+} 
+},
+"layout": {
+ "PANEL": [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18" ],
+"ROW": [ 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4 ],
+"COL": [ 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3 ],
+"data.name": [ "systematic", "H3K36me3_TDH_other", "H3K36me3_TDH_immune", "H3K4me3_TDH_ENCODE", "H3K36me3_AM_immune", "CTCF_TDH_ENCODE", "H3K9me3_TDH_BP", "H3K4me1_TDH_BP", "H3K27ac-H3K4me3_TDHAM_BP", "H3K4me3_XJ_immune", "ATAC_JV_adipose", "H3K4me3_TDH_other", "H3K4me3_TDH_immune", "H3K36me3_TDH_ENCODE", "H3K27me3_TDH_some", "H3K4me3_PGP_immune", "H3K27ac_TDH_some", "H3K27me3_RL_cancer" ],
+"SCALE_X": [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+"SCALE_Y": [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+"AXIS_X": [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true ],
+"AXIS_Y": [ true, false, false, false, false, true, false, false, false, false, true, false, false, false, false, true, false, false ],
+"coord_fixed": [ false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false ],
+"width_proportion": [      0.2,      0.2,      0.2,      0.2,      0.2,      0.2,      0.2,      0.2,      0.2,      0.2,      0.2,      0.2,      0.2,      0.2,      0.2,      0.2,      0.2,      0.2 ],
+"height_proportion": [     0.25,     0.25,     0.25,     0.25,     0.25,     0.25,     0.25,     0.25,     0.25,     0.25,     0.25,     0.25,     0.25,     0.25,     0.25,     0.25,     0.25,     0.25 ] 
+},
+"panel_background": {
+ "fill": "#EBEBEB",
+"colour": "transparent",
+"size":      0.5,
+"linetype":        1 
+},
+"panel_border": [],
+"grid_major": {
+ "colour": "#FFFFFF",
+"size":      0.5,
+"linetype":        1,
+"lineend": "butt",
+"loc": {
+ "x": [
+ [
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+],
+[
+ 1,
+2 
+] 
+],
+"y": [
+ [
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+],
+[
+      0.8,
+     0.9,
+       1 
+] 
+] 
+} 
+},
+"grid_minor": {
+ "colour": "#FFFFFF",
+"size":     0.25,
+"linetype":        1,
+"lineend": "butt",
+"loc": {
+ "x": [
+ [],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[],
+[] 
+],
+"y": [
+ [
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+],
+[
+     0.75,
+     0.8,
+    0.85,
+     0.9,
+    0.95,
+       1 
+] 
+] 
+} 
+},
+"axis1": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis2": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis3": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis4": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis5": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis6": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis7": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis8": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis9": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis10": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis11": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis12": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis13": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis14": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis15": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis16": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis17": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"axis18": {
+ "x": [
+ 1,
+2 
+],
+"xlab": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"xrange": [      0.4,      2.6 ],
+"xline": true,
+"xticks": true,
+"y": [
+      0.8,
+     0.9,
+       1 
+],
+"ylab": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"yrange": [ 0.727005,  1.00972 ],
+"yline": true,
+"yticks": true 
+},
+"xtitle": "algorithm",
+"xanchor": "middle",
+"xangle":        0,
+"ytitle": "auc",
+"yanchor": "end",
+"yangle":        0,
+"xlabs": [
+ "iregnet.estscale",
+"iregnet.scale1" 
+],
+"ylabs": [
+ "0.8",
+"0.9",
+"1.0" 
+],
+"options": {
+ "width":      400,
+"height":      400 
+},
+"geoms": [
+ "geom1_point_q",
+"geom2_hline_q" 
+] 
+} 
+} 
+}

@@ -1,0 +1,295 @@
+---
+title: "benchmarks"
+output: html_document
+---
+
+# Benchmarks for IREGNET
+
+Loading the required packges
+```{r loading}
+library(iregnetoptim)
+library(iregnet)
+library(glmnet)
+library(survival)
+library(directlabels)
+library(ggplot2)
+library(microbenchmark)
+library(dplyr) 
+```
+
+
+## Uncensored Data
+
+- **Prostate Dataset**
+
+**Packages: Iregnet, Iregnet Optimised, Glmnet**
+```{r test}
+data("Prostate", package = "lasso2")
+X = as.matrix(Prostate[, c(2:9)])
+Y = matrix(c(Prostate[, 1],Prostate[, 1]), nrow = nrow(Prostate), ncol = 2)
+colnames(Y)[c(1,2)] <- "lcalvol"
+res <- data.frame() #Result data frame
+for(i in c(4:(nrow(X)/5))*5)
+{
+  evaltime <- microbenchmark(iregnet(X[1:i,], Y[1:i,]), 
+                             iregnetoptim(X[1:i,], Y[1:i,]), 
+                             glmnet(X[1:i,], Y[1:i,1]), 
+                             times = 100L)
+  res <- bind_rows(res, data.frame(i, list(summary(evaltime)[,c('lq','mean','uq')])))
+}
+res <- cbind.data.frame(c("IREGNET", "Iregnet Optimization", "GLMNET"), res)
+names(res) <- c("expr", names(res)[2:5])
+p <- ggplot(res, aes(x = i))+
+  geom_ribbon(aes(ymin = lq, ymax = uq, fill = expr, group = expr), alpha = 1/2)+
+  geom_line(aes(y = mean, group = expr, colour = expr))+
+  ggtitle('Runtime(in milliseconds) vs Dataset Size') +
+  xlab('Dataset Size') +
+  ylab('Runtime (in milliseconds)')
+direct.label(p,"angled.boxes")
+```
+
+A weird thing, did not fit for many values of i
+```{r weird}
+data("Prostate", package = "lasso2")
+X = as.matrix(Prostate[, c(2:9)])
+Y = matrix(c(Prostate[, 1],Prostate[, 1]), nrow = nrow(Prostate), ncol = 2)
+colnames(Y)[c(1,2)] <- "lcalvol"
+res <- data.frame() #Result data frame
+for(i in c(30:nrow(X)))
+{
+  X_copy <- X
+  Y_copy <- Y
+  evaltime <- microbenchmark(iregnet(X[1:i,], Y[1:i,]), 
+                             iregnetoptim(X_copy[1:i,], Y_copy[1:i,]), 
+                             glmnet(X[1:i,], Y[1:i,1]), 
+                             times = 100L)
+  res <- bind_rows(res, data.frame(i, list(summary(evaltime)[,c('lq','mean','uq')])))
+}
+res <- cbind.data.frame(c("IREGNET", "Iregnet Optimization", "GLMNET"), res)
+names(res) <- c("expr", names(res)[2:5])
+p <- ggplot(res, aes(x = i))+
+  geom_ribbon(aes(ymin = lq, ymax = uq, fill = expr, group = expr), alpha = 1/2)+
+  geom_line(aes(y = mean, group = expr, colour = expr))+
+  ggtitle('Runtime(in milliseconds) vs Dataset Size') +
+  xlab('Dataset Size') +
+  ylab('Runtime (in milliseconds)')
+direct.label(p,"angled.boxes")
+```
+Using the lambda path from glmnet
+```{r prostate_lambda}
+data("Prostate", package = "lasso2")
+X = as.matrix(Prostate[, c(2:9)])
+Y = matrix(c(Prostate[, 1],Prostate[, 1]), nrow = nrow(Prostate), ncol = 2)
+colnames(Y)[c(1,2)] <- "lcalvol"
+#Centering the data
+Y <- apply(Y, 2, function(y) y - mean(y))
+X <- apply(X, 2, function(x) x - mean(x))
+res <- data.frame() #Result data frame
+for(i in 20:nrow(X))
+{
+  glm <- glmnet(X[1:i,], Y[1:i,1])
+  evaltime <- microbenchmark(iregnet(X[1:i,], Y[1:i,], 
+                                     num_lambda = length(glm$lambda), lambda = glm$lambda), 
+                             iregnetoptim(x <- X[1:i,],y <- Y[1:i,], 
+                                     num_lambda = length(glm$lambda), lambda = glm$lambda),
+                             glmnet(X[1:i,], Y[1:i,1]), 
+                             times = 100L)
+  res <- bind_rows(res, data.frame(i, list(summary(evaltime)[,c('lq','mean','uq')])))
+}
+res <- cbind.data.frame(c("IREGNET", "IREGNET Optimized", "GLMNET"), res)
+names(res) <- c("expr", names(res)[2:5])
+p <- ggplot(res, aes(x = i))+
+  geom_ribbon(aes(ymin = lq, ymax = uq, fill = expr, group = expr), alpha = 1/2)+
+  geom_line(aes(y = mean, group = expr, colour = expr))+
+  ggtitle('Runtime(in milliseconds) vs Dataset Size') +
+  xlab('Dataset Size') +
+  ylab('Runtime (in milliseconds)')
+direct.label(p,"angled.boxes")
+```
+
+
+- **Random Dataset for 1000 observations**
+**With packages glmnet, iregnet and iregnet optimised**
+```{r rand_1000}
+X <- rnorm(5000, 1, 1.5) %>% matrix(nrow = 1000, ncol = 5)
+Y <- rnorm(1000, 1, 1.5) %>% matrix(nrow = 1000, ncol = 1)
+Y = matrix(c(Y, Y), nrow = 1000, ncol = 2)
+res <- data.frame() #Result data frame
+for(i in c(1:50)*20)
+{
+  glm <- glmnet(X[1:i,], Y[1:i,1])
+  evaltime <- microbenchmark(iregnet(X[1:i,], Y[1:i,], 
+                                     num_lambda = length(glm$lambda), lambda = glm$lambda), 
+                             iregnetoptim(X[1:i,], Y[1:i,], 
+                                          num_lambda = length(glm$lambda), lambda = glm$lambda),
+                             glmnet(X[1:i,], Y[1:i,1]), 
+                             times = 100L)
+  res <- bind_rows(res, data.frame(i, list(summary(evaltime)[,c('lq','mean','uq')])))
+}
+res <- cbind.data.frame(c("IREGNET", "IREGNET Optimized", "GLMNET"), res)
+names(res) <- c("expr", names(res)[2:5])
+
+res_temp <- res[34:150,]
+
+p <- ggplot(res, aes(x = i))+
+  geom_ribbon(aes(ymin = lq, ymax = uq, fill = expr, group = expr), alpha = 1/2)+
+  geom_line(aes(y = mean, group = expr, colour = expr))+
+  ggtitle('Runtime(in milliseconds) vs Dataset Size') +
+  xlab('Dataset Size') +
+  ylab('Runtime (in milliseconds)')
+direct.label(p,"angled.boxes")
+
+p_temp <- ggplot(res_temp, aes(x = i))+
+  geom_ribbon(aes(ymin = lq, ymax = uq, fill = expr, group = expr), alpha = 1/2)+
+  geom_line(aes(y = mean, group = expr, colour = expr))+
+  ggtitle('Runtime(in milliseconds) vs Dataset Size') +
+  xlab('Dataset Size') +
+  ylab('Runtime (in milliseconds)')
+direct.label(p_temp,"angled.boxes")
+```
+
+**With packages iregnet and glmnet**
+```{r rand_1000_non_optimised}
+X <- rnorm(5000, 1, 1.5) %>% matrix(nrow = 1000, ncol = 5)
+Y <- rnorm(1000, 1, 1.5) %>% matrix(nrow = 1000, ncol = 1)
+Y = matrix(c(Y, Y), nrow = 1000, ncol = 2)
+res <- data.frame() #Result data frame
+for(i in c(1:50)*20)
+{
+  glm <- glmnet(X[1:i,], Y[1:i,1])
+  evaltime <- microbenchmark(iregnet(X[1:i,], Y[1:i,], 
+                                     num_lambda = length(glm$lambda), lambda = glm$lambda), 
+                             glmnet(X[1:i,], Y[1:i,1]), 
+                             times = 100L)
+  res <- bind_rows(res, data.frame(i, list(summary(evaltime)[,c('lq','mean','uq')])))
+}
+res <- cbind.data.frame(c("IREGNET", "GLMNET"), res)
+names(res) <- c("expr", names(res)[2:5])
+p <- ggplot(res, aes(x = i))+
+  geom_ribbon(aes(ymin = lq, ymax = uq, fill = expr, group = expr), alpha = 1/2)+
+  geom_line(aes(y = mean, group = expr, colour = expr))+
+  ggtitle('Runtime(in milliseconds) vs Dataset Size') +
+  xlab('Dataset Size') +
+  ylab('Runtime (in milliseconds)')
+direct.label(p,"angled.boxes")
+```
+
+
+
+
+- **Random Dataset for 100000 observations**
+
+**Packages: Iregnet, Iregnet Optimised, Glmnet**
+```{r random}
+## Randomly generated data
+X <- rnorm(500000, 1, 1.5) %>% matrix(nrow = 100000, ncol = 5)
+Y <- rnorm(100000, 1, 1.5) %>% matrix(nrow = 100000, ncol = 1)
+Y = matrix(c(Y, Y), nrow = 100000, ncol = 2)
+res <- data.frame() 
+for(i in c(1:20)*5000)
+{
+  evaltime <- microbenchmark(iregnet(X[1:i,], Y[1:i,]), 
+                             iregnetoptim(X[1:i,], Y[1:i,]), 
+                             glmnet(X[1:i,], Y[1:i,1]), 
+                             times = 10L)
+  res <- bind_rows(res, data.frame(i, list(summary(evaltime)[,c('lq','mean','uq')])))
+}
+res <- cbind.data.frame(c("IREGNET", "Iregnet Optimization", "GLMNET"), res)
+names(res) <- c("expr", names(res)[2:5])
+p <- ggplot(res, aes(x = i))+
+  geom_ribbon(aes(ymin = lq, ymax = uq, fill = expr, group = expr), alpha = 1/2)+
+  geom_line(aes(y = mean, group = expr, colour = expr))+
+  ggtitle('Runtime(in milliseconds) vs Dataset Size') +
+  xlab('Dataset Size') +
+  ylab('Runtime (in milliseconds)')
+direct.label(p,"angled.boxes")
+```
+
+## Right Censored Data
+
+- **Ovarian Dataset**
+
+**Packages: Iregnet, Iregnet Optimised, Survreg**
+**Unregularised Solution**
+```{r ovar_unreg}
+data("ovarian")
+X <- cbind(ovarian$ecog.ps, ovarian$rx)
+res <- data.frame() #Result data frame
+for(i in c(20:nrow(X)))
+{
+  evaltime <- microbenchmark(iregnet(X[1:i,], 
+                                     Surv(ovarian$futime[1:i], ovarian$fustat[1:i]),
+                                     num_lambda = 1, lambda = 0), 
+                             iregnetoptim(X[1:i,], 
+                                          Surv(ovarian$futime[1:i], ovarian$fustat[1:i]),
+                                          num_lambda = 1, lambda = 0),
+                             survreg(Surv(futime, fustat) ~ X[1:i,], data = ovarian[1:i,]), 
+                             times = 100L)
+  res <- bind_rows(res, data.frame(i, list(summary(evaltime)[,c('lq','mean','uq')])))
+}
+res <- cbind.data.frame(c("IREGNET", "Iregnet Optimization", "Survreg"), res)
+names(res) <- c("expr", names(res)[2:5])
+p <- ggplot(res, aes(x = i))+
+  geom_ribbon(aes(ymin = lq, ymax = uq, fill = expr, group = expr), alpha = 1/2)+
+  geom_line(aes(y = mean, group = expr, colour = expr))+
+  ggtitle('Runtime(in milliseconds) vs Dataset Size') +
+  xlab('Dataset Size') +
+  ylab('Runtime (in milliseconds)')
+direct.label(p,"angled.boxes")
+```
+**Regularised Solution with 100 lambdas**
+```{r ovar}
+data("ovarian")
+X <- cbind(ovarian$ecog.ps, ovarian$rx)
+res <- data.frame() #Result data frame
+for(i in c(15:nrow(X)))
+{
+  evaltime <- microbenchmark(iregnet(X[1:i,], 
+                                     Surv(ovarian$futime[1:i], ovarian$fustat[1:i])), 
+                             iregnetoptim(X[1:i,], 
+                                          Surv(ovarian$futime[1:i], ovarian$fustat[1:i])),
+                             survreg(Surv(futime, fustat) ~ X[1:i,], data = ovarian[1:i,]), 
+                             times = 100L)
+  res <- bind_rows(res, data.frame(i, list(summary(evaltime)[,c('lq','mean','uq')])))
+}
+res <- cbind.data.frame(c("IREGNET", "Iregnet Optimization", "Survreg"), res)
+names(res) <- c("expr", names(res)[2:5])
+p <- ggplot(res, aes(x = i))+
+  geom_ribbon(aes(ymin = lq, ymax = uq, fill = expr, group = expr), alpha = 1/2)+
+  geom_line(aes(y = mean, group = expr, colour = expr))+
+  ggtitle('Runtime(in milliseconds) vs Dataset Size') +
+  xlab('Dataset Size') +
+  ylab('Runtime (in milliseconds)')
+direct.label(p,"angled.boxes")
+```
+
+## Interval Censored Data
+
+**Neuroblastoma**
+**Packages: Iregnet, Iregnet Optimised, Glmnet**
+```{r interval, eval = FALSE}
+data("neuroblastomaProcessed", package = "penaltyLearning")
+X <- neuroblastomaProcessed$feature.mat
+Y <- neuroblastomaProcessed$target.mat
+X = X[,apply(X,2,function(x){
+  return(var(x)!=0)
+  })]
+res <- data.frame() #Result data frame
+# for(i in c((6:12)*250, 3418)
+for(i in c(6:12)*250)
+{
+  evaltime <- microbenchmark(iregnet(X[1:i,], Y[1:i,]), 
+                             iregnetoptim(X[1:i,], Y[1:i,]), 
+                             times = 10L)
+  res <- bind_rows(res, data.frame(i, list(summary(evaltime)[,c('lq','mean','uq')])))
+}
+res <- cbind.data.frame(c("IREGNET", "Iregnet Optimization", "Survreg"), res)
+names(res) <- c("expr", names(res)[2:5])
+p <- ggplot(res, aes(x = i))+
+  geom_ribbon(aes(ymin = lq, ymax = uq, fill = expr, group = expr), alpha = 1/2)+
+  geom_line(aes(y = mean, group = expr, colour = expr))+
+  ggtitle('Runtime(in milliseconds) vs Dataset Size') +
+  xlab('Dataset Size') +
+  ylab('Runtime (in milliseconds)')
+direct.label(p,"angled.boxes")
+```
