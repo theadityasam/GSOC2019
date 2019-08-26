@@ -4,7 +4,7 @@
 * Project: IREGNET on CRAN
 * Mentor: Anuj Khare <khareanuj18@gmail.com>, Toby Hocking <tdhock5@gmail.com>
 * Student: Aditya Samantaray <aditya.samantaray1@gmail.com>
-* Repo Link: https://github.com/anujkhare/iregnet
+* Repo Link: [https://github.com/anujkhare/iregnet](https://github.com/anujkhare/iregnet)
 
 ## Background
 Interval regression is a class of machine learning models which is useful when the predicted values are real numbers but
