@@ -18,12 +18,13 @@ censorship - left, right, interval and none. It fits an **Accelerated Failure Ti
 ## Related Coding Work
 The source code of iregnet was written by Anuj Khare and the cross validation method was coded by Toby Hocking. The main goal
 of this year's GSOC was to make sure the package gets published on CRAN. For that, the package needs to be tested and debugged
-so that it passes all CRAN checks. 
-Link of the project description: https://github.com/rstats-gsoc/gsoc2019/wiki/iregnet-on-CRAN#coding-project-iregnet-on-cran 
+so that it passes all CRAN checks.  
+Link of the project description: [https://github.com/rstats-gsoc/gsoc2019/wiki/iregnet-on-CRAN#coding-project-iregnet-on-cran](https://github.com/rstats-gsoc/gsoc2019/wiki/iregnet-on-CRAN#coding-project-iregnet-on-cran).
+
 The work done for getting the package on CRAN has been briefly described below alongwith the links to the changes and additions.
 
 ### Merging PR#54
-Link: https://github.com/anujkhare/iregnet/pull/54 
+Link: [https://github.com/anujkhare/iregnet/pull/54](https://github.com/anujkhare/iregnet/pull/54)
 
 The first task was to make sure that the cross validation method is reviewed and implemented. Changes were made to the code 
 so that the builds pass for [cv.iregnet.R](https://github.com/anujkhare/iregnet/blob/master/R/cv.iregnet.R) i.e. the K-fold
@@ -33,11 +34,12 @@ CV method should work as expected. Also, as per the Toby's recommendations, futu
 ### Testing the package on several datasets
 
 The package needed to be tested on all kinds of dataset. Tests have been written which fit `iregnet` on [ovarian](https://github.com/anujkhare/iregnet/blob/master/tests/testthat/test_survival_glmnet.R), [prostate](https://github.com/anujkhare/iregnet/blob/master/tests/testthat/test_elemStatsLearn.R), 
-[neuroblastomaProcessed](https://github.com/anujkhare/iregnet/blob/master/tests/testthat/test_all_open.R#L50), [penalty.learning](https://github.com/anujkhare/iregnet/blob/master/tests/testthat/test_cv.R#L6) datasets.
-Link to benchmark: https://theadityasam.github.io/iregbenchmark/benchmarks.html
+[neuroblastomaProcessed](https://github.com/anujkhare/iregnet/blob/master/tests/testthat/test_all_open.R#L50), [penalty.learning](https://github.com/anujkhare/iregnet/blob/master/tests/testthat/test_cv.R#L6) datasets. 
+
+Link to benchmark: [https://theadityasam.github.io/iregbenchmark/benchmarks.html](https://theadityasam.github.io/iregbenchmark/benchmarks.html)
 
 Toby had also provided a code that would test `iregnet` on 33 datasets.
-Link: https://github.com/anujkhare/iregnet/issues/71
+Link: [https://github.com/anujkhare/iregnet/issues/71](https://github.com/anujkhare/iregnet/issues/71)
 The issue prevailed in the old code where the default value of threshold was 1e-4. On almost all the datasets, it
 was fixed when the default threshold was set to 1e-3. This problem was witnessed in the datasets where the 
 number of predictors > number of observations. Some predictors failed to converge and reached max iterations, resulting in a jump 
@@ -46,7 +48,7 @@ Further work needed to be done to implement those features but unfortunately, I 
 a learning phase and had to test and fix other issues. Nevertheless I'll keep on working to implement them even after the coding period ends.
 
 ### A detailed vignette 
-Link: https://theadityasam.github.io/iregvignette/iregnet.html
+Link: [https://theadityasam.github.io/iregvignette/iregnet.html](https://theadityasam.github.io/iregvignette/iregnet.html)
 
 A very detailed vignette has been written for the package. The vignette covers everything, package installation, dataset 
 examples (left censored, right censored, interval censored and uncensored), predictions, hyperparameter tuning for lambda selections
@@ -54,7 +56,7 @@ and the theory & algorithms implemented. The vignette includes speed comparision
 accuracy comparisions with `IntervalRegressionCV` from `penaltyLearning` package.
 
 ### Making sure the docs and tests pass the CRAN checks
-Link: https://travis-ci.org/anujkhare/iregnet
+Link: [https://travis-ci.org/anujkhare/iregnet](https://travis-ci.org/anujkhare/iregnet)
 
 To test if the package is ready for CRAN submission, we run `R CMD check --as-cran` to check for any potential build errors.
 The travis builds of the master branch produce no errors and hence the package is good to go for submission.
