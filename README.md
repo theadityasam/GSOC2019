@@ -72,8 +72,8 @@ install.packages("iregnet")
 
 ## Potential Future Work
 
-1) Implementation of sequential strong rules ([link](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4262615/)). A potential reason for
-the sheer speed of glmnet's convergence might be the rules implemented into the algorithm that discard the predictors that are
+1) Implementation of feature screening rules ([link](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4262615/)). A potential reason for
+the sheer speed of glmnet's convergence might be the screening rules implemented into the algorithm that discard the predictors that are
 estimated to not affect the fit significantly.
 
 2) Also, glmnet has early stoppage along the lambda path. The algorithm stops when the change in deviance is below the threshold.
