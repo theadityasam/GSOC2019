@@ -16,9 +16,8 @@ Iregnet is the first R package to perform interval regression with elasticnet re
 censorship - left, right, interval and none. It fits an **Accelerated Failure Time(AFT)** model on the input data.
 
 ## Related Coding Work
-The source code of iregnet was written by Anuj Khare and the cross validation method was coded by Toby Hocking. The main goal
-of this year's GSOC was to make sure the package gets published on CRAN. For that, the package needs to be tested and debugged
-so that it passes all CRAN checks.  
+The source code of iregnet was written by Anuj Khare and a basic cross validation method was coded by Toby Hocking. The main goal
+of this year's GSOC was to implement a complete CV feature(that works on all the supported distributions) and make sure that the package gets published on CRAN. For that, the package needs to be tested and debugged so that it passes all CRAN checks.  
 Link of the project description: [https://github.com/rstats-gsoc/gsoc2019/wiki/iregnet-on-CRAN#coding-project-iregnet-on-cran](https://github.com/rstats-gsoc/gsoc2019/wiki/iregnet-on-CRAN#coding-project-iregnet-on-cran).
 
 The work done for getting the package on CRAN has been briefly described below alongwith the links to the changes and additions.
